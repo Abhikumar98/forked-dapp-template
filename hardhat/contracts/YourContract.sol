@@ -1,27 +1,18 @@
 pragma solidity >=0.8.0 <0.9.0;
-//SPDX-License-Identifier: MIT
 
-import "hardhat/console.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol"; 
-// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+// import "hardhat/console.sol";
 
-contract YourContract {
+contract MerkleTest {
+    // Our rootHash
+    bytes32 public root = 0xb7cb61815274765ef8247c4d18f2cb6ee85ea792454ea3f1df96986673010fd2;
 
-  event SetPurpose(address sender, string purpose);
+    function checkValidity(bytes32[] calldata _merkleProof) public view returns (bool){
+        // console.log(_merkleProof);
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        // console.log(leaf);
+        require(MerkleProof.verify(_merkleProof, root, leaf), "Incorrect proof");
+        return true; // Or you can mint tokens here
+    }
 
-  string public purpose = "Building Unstoppable Apps!!!";
-
-  constructor() payable {
-    // what should we do on deploy?
-  }
-
-  function setPurpose(string memory newPurpose) public {
-      purpose = newPurpose;
-      console.log(msg.sender,"set purpose to",purpose);
-      emit SetPurpose(msg.sender, purpose);
-  }
-
-  // to support receiving ETH by default
-  receive() external payable {}
-  fallback() external payable {}
 }

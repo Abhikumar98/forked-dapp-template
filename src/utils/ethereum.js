@@ -6,7 +6,7 @@ export const contract = () => {
 	const provider = new ethers.providers.Web3Provider(window.ethereum)
 	if (ethereum) {
 		const signer = provider.getSigner()
-		const contractReader = new ethers.Contract('0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0', abi, signer)
+		const contractReader = new ethers.Contract('0x5fc8d32690cc91d4c39d9d3abcbd16989f875707', abi, signer)
 		return contractReader
 	}
 }
